@@ -14,18 +14,16 @@ docker compose -p taskingai down
 echo "Removendo imagem antiga do frontend para reconstruir com mais memória..."
 docker rmi -f taskingai-frontend 2>/dev/null || true
 
-# Puxa as imagens mais recentes
-echo "Atualizando imagens..."
-docker compose -p taskingai pull
-
-# Inicia os containers com maior limite de memória para Node.js
-echo "Iniciando a stack do TaskingAI..."
+# Ativa o BuildKit para melhorar o desempenho do build
 export DOCKER_BUILDKIT=1
 export COMPOSE_DOCKER_CLI_BUILD=1
-docker compose -p taskingai --env-file .env up -d --build frontend
 
-# Inicia o restante dos serviços
-echo "Iniciando os demais serviços..."
+# Faz o build de todos os serviços, utilizando cache quando disponível
+echo "Construindo todos os serviços..."
+docker compose -p taskingai --env-file .env build --progress=plain
+
+# Inicia todos os serviços após o build
+echo "Iniciando todos os serviços..."
 docker compose -p taskingai --env-file .env up -d
 
 echo "Stack do TaskingAI iniciada com sucesso!"
