@@ -17,7 +17,9 @@ COPY ./requirements.txt ./
 RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Install NLTK and download required data
-COPY ./nltk_data /usr/local/share/nltk_data
+RUN pip3 install --no-cache-dir nltk && \
+    mkdir -p /usr/local/share/nltk_data && \
+    python -m nltk.downloader -d /usr/local/share/nltk_data punkt
 
 # Copy the rest of the application
 COPY ./app ./app
