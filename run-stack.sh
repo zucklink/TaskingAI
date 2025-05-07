@@ -17,11 +17,11 @@ docker rmi -f taskingai-frontend:latest taskingai-backend-inference:latest taski
 # Ativa o BuildKit para melhorar o desempenho do build
 export DOCKER_BUILDKIT=1
 export COMPOSE_DOCKER_CLI_BUILD=1
-export COMPOSE_BAKE=true
+# export COMPOSE_BAKE=true
 
 # Faz o build de todos os serviços com nome específico para as imagens
 echo "Construindo todos os serviços..."
-docker compose -p taskingai --env-file .env build --progress=plain
+docker compose -p taskingai --env-file .env build --no-cache --progress=plain
 
 # Inicia todos os serviços após o build
 echo "Iniciando todos os serviços..."
