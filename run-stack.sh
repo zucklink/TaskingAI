@@ -17,6 +17,7 @@ docker rmi -f taskingai-frontend 2>/dev/null || true
 # Ativa o BuildKit para melhorar o desempenho do build
 export DOCKER_BUILDKIT=1
 export COMPOSE_DOCKER_CLI_BUILD=1
+export COMPOSE_BAKE=true
 
 # Faz o build de todos os serviços, utilizando cache quando disponível
 echo "Construindo todos os serviços..."
