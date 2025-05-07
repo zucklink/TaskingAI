@@ -13,8 +13,8 @@ RUN npm install
 # Copy the rest of your app's source code from your host to your image filesystem
 COPY . .
 
-# Build the application for production
-RUN npm run build
+# Build the application for production with increased memory limit
+RUN export NODE_OPTIONS="--max-old-space-size=4096" && npm run build
 
 # Start with a lightweight version of Nginx on Alpine Linux
 FROM nginx:alpine
